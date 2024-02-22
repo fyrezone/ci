@@ -2,13 +2,6 @@ name: Nx Cloud Main
 
 on:
   workflow_call:
-    secrets:
-      NPM_TOKEN:
-        required: false
-      NX_CLOUD_ACCESS_TOKEN:
-        required: false
-      NX_CLOUD_AUTH_TOKEN:
-        required: false
     inputs:
       number-of-agents:
         required: false
@@ -80,6 +73,10 @@ env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
   NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  FMC_S3_ACCESS_KEY: ${secrets.FMC_S3_ACCESS_KEY}
+  FMC_S3_SECRET_KEY: ${secrets.FMC_S3_SECRET_KEY}
+  FMC_SSO_API_KEY: ${secrets.FMC_SSO_API_KEY}
+  FMC_SSO_USER: ${vars.FMC_SSO_USER}
 
 jobs:
   main:

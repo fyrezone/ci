@@ -216,7 +216,12 @@ jobs:
         if: ${{ inputs.environment-variables != '' }}
         uses: actions/github-script@v6
         env:
-          ENV_VARS: ${{ inputs.environment-variables }}
+          ENV_VARS: |
+            ${{ inputs.environment-variables }}
+            FMC_S3_ACCESS_KEY=${{ secrets.FMC_S3_ACCESS_KEY }}
+            FMC_S3_SECRET_KEY=${{ secrets.FMC_S3_SECRET_KEY }}
+            FMC_SSO_API_KEY=${{ secrets.FMC_SSO_API_KEY }}
+            FMC_SSO_USER=${{ vars.FMC_SSO_USER }}
         with:
           script: |
             const { appendFileSync } = require('fs');

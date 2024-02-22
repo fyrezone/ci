@@ -36,7 +36,7 @@ on:
         type: number
       environment:
         required: false
-        type: environment
+        type: string
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true

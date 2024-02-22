@@ -41,6 +41,9 @@ on:
       timeout:
         required: false
         type: number
+      environment:
+        required: false
+        type: environment
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
@@ -72,6 +75,7 @@ jobs:
     needs: set-agents
     runs-on: ${{ inputs.runs-on }}
     name: Agent ${{ matrix.agent }}
+    environment: ${{ inputs.environment }}
     # GitHub's default timeout is 360 minutes
     timeout-minutes: ${{ inputs.timeout || 360 }}
     strategy:

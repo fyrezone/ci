@@ -135,6 +135,16 @@ jobs:
           version: ${{ inputs.pnpm-version }}
           package_json_file: "${{ inputs.working-directory && format('{0}/package.json', inputs.working-directory) || 'package.json' }}"
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
       - name: Print node/npm/yarn versions
         id: versions
         run: |

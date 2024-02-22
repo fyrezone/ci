@@ -186,7 +186,6 @@ jobs:
             ${{ runner.os }}-node-${{ steps.versions.outputs.node_version }}-yarn-berry-
 
       - name: Process environment-variables
-        if: ${{ inputs.environment-variables != '' }}
         uses: actions/github-script@v6
         env:
           ENV_VARS: |

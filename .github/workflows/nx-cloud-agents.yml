@@ -49,6 +49,7 @@ env:
   FMC_S3_SECRET_KEY: ${secrets.FMC_S3_SECRET_KEY}
   FMC_SSO_API_KEY: ${secrets.FMC_SSO_API_KEY}
   FMC_SSO_USER: ${vars.FMC_SSO_USER}
+  BUILD_SCAN: ${vars.BUILD_SCAN}
 
 jobs:
   set-agents:
@@ -194,6 +195,7 @@ jobs:
             FMC_S3_SECRET_KEY=${{ secrets.FMC_S3_SECRET_KEY }}
             FMC_SSO_API_KEY=${{ secrets.FMC_SSO_API_KEY }}
             FMC_SSO_USER=${{ vars.FMC_SSO_USER }}
+            BUILD_SCAN=${{ vars.BUILD_SCAN }}
         with:
           script: |
             const { appendFileSync } = require('fs');

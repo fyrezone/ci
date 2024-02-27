@@ -65,6 +65,9 @@ on:
       environment:
         required: false
         type: string
+      github-token:
+        required: false
+        type: string
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
@@ -78,6 +81,7 @@ env:
   FMC_SSO_API_KEY: ${secrets.FMC_SSO_API_KEY}
   FMC_SSO_USER: ${vars.FMC_SSO_USER}
   BUILD_SCAN: ${vars.BUILD_SCAN}
+  GITHUB_TOKEN: ${{ inputs.github-token || secrets.GITHUB_TOKEN }}
 
 jobs:
   main:
@@ -102,6 +106,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           # We need to fetch all branches and commits so that Nx affected has a base to compare against.
           fetch-depth: 0
+          token: ${{ env.GITHUB_TOKEN }}
 
       - uses: actions/checkout@v3
         name: Checkout [Default Branch]
@@ -109,6 +114,7 @@ jobs:
         with:
           # We need to fetch all branches and commits so that Nx affected has a base to compare against.
           fetch-depth: 0
+          token: ${{ env.GITHUB_TOKEN }}
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3

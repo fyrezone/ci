@@ -65,9 +65,9 @@ on:
       environment:
         required: false
         type: string
-      github-token:
+      github-token-from-secrets:
         required: false
-        type: string
+        type: boolean
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
@@ -76,12 +76,12 @@ env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
   NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  FMC_S3_ACCESS_KEY: ${secrets.FMC_S3_ACCESS_KEY}
-  FMC_S3_SECRET_KEY: ${secrets.FMC_S3_SECRET_KEY}
-  FMC_SSO_API_KEY: ${secrets.FMC_SSO_API_KEY}
-  FMC_SSO_USER: ${vars.FMC_SSO_USER}
-  BUILD_SCAN: ${vars.BUILD_SCAN}
-  GITHUB_TOKEN: ${{ inputs.github-token || secrets.GITHUB_TOKEN }}
+  FMC_S3_ACCESS_KEY: ${{ secrets.FMC_S3_ACCESS_KEY }}
+  FMC_S3_SECRET_KEY: ${{ secrets.FMC_S3_SECRET_KEY }}
+  FMC_SSO_API_KEY: ${{ secrets.FMC_SSO_API_KEY }}
+  FMC_SSO_USER: ${{ vars.FMC_SSO_USER }}
+  BUILD_SCAN: ${{ vars.BUILD_SCAN }}
+  GITHUB_TOKEN: ${{ inputs.github-token-from-secrets && secrets.RELEASE_GH_PAT || secrets.GITHUB_TOKEN }}
 
 jobs:
   main:
@@ -224,11 +224,12 @@ jobs:
         env:
           ENV_VARS: |
             ${{ inputs.environment-variables }}
-            FMC_S3_ACCESS_KEY=${{ secrets.FMC_S3_ACCESS_KEY }}
-            FMC_S3_SECRET_KEY=${{ secrets.FMC_S3_SECRET_KEY }}
-            FMC_SSO_API_KEY=${{ secrets.FMC_SSO_API_KEY }}
-            FMC_SSO_USER=${{ vars.FMC_SSO_USER }}
-            BUILD_SCAN=${{ vars.BUILD_SCAN }}
+            FMC_S3_ACCESS_KEY=${{ env.FMC_S3_ACCESS_KEY }}
+            FMC_S3_SECRET_KEY=${{ env.FMC_S3_SECRET_KEY }}
+            FMC_SSO_API_KEY=${{ env.FMC_SSO_API_KEY }}
+            FMC_SSO_USER=${{ env.FMC_SSO_USER }}
+            BUILD_SCAN=${{ env.BUILD_SCAN }}
+            GITHUB_TOKEN=${{ env.GITHUB_TOKEN }}
         with:
           script: |
             const { appendFileSync } = require('fs');

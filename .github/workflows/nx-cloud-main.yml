@@ -68,10 +68,6 @@ on:
       github-token-from-secrets:
         required: false
         type: boolean
-      stop-agents:
-        required: false
-        type: boolean
-        default: true
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
@@ -385,7 +381,7 @@ jobs:
 
       - name: Stop all running agents for this CI run
         # It's important that we always run this step, otherwise in the case of any failures in preceding non-Nx steps, the agents will keep running and waste billable minutes
-        if: ${{ failure() || env.STOP_AGENTS}}
+        if: ${{ always() }}
         run: npx nx-cloud stop-all-agents
 
       # The good thing about the multi-line string input for sequential commands is that we can simply forward it on as is to the bash shell and it will behave

@@ -196,11 +196,12 @@ jobs:
         env:
           ENV_VARS: |
             ${{ inputs.environment-variables }}
-            FMC_S3_ACCESS_KEY=${{ secrets.FMC_S3_ACCESS_KEY }}
-            FMC_S3_SECRET_KEY=${{ secrets.FMC_S3_SECRET_KEY }}
-            FMC_SSO_API_KEY=${{ secrets.FMC_SSO_API_KEY }}
-            FMC_SSO_USER=${{ vars.FMC_SSO_USER }}
-            BUILD_SCAN=${{ vars.BUILD_SCAN }}
+            FMC_S3_ACCESS_KEY=${{ env.FMC_S3_ACCESS_KEY }}
+            FMC_S3_SECRET_KEY=${{ env.FMC_S3_SECRET_KEY }}
+            FMC_SSO_API_KEY=${{ env.FMC_SSO_API_KEY }}
+            FMC_SSO_USER=${{ env.FMC_SSO_USER }}
+            BUILD_SCAN=${{ env.BUILD_SCAN }}
+            GITHUB_TOKEN=${{ env.GITHUB_TOKEN }}
         with:
           script: |
             const { appendFileSync } = require('fs');

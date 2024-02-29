@@ -135,6 +135,9 @@ jobs:
           echo "GRADLE_USER_HOME=${HOME}/.gradle" >> $GITHUB_ENV
           echo "mavenAccessKey=${FMC_S3_ACCESS_KEY}" >> ~/.gradle/gradle.properties
           echo "mavenSecretKey=${FMC_S3_SECRET_KEY}" >> ~/.gradle/gradle.properties
+          
+      - name: Init Gradle
+        run: ./gradlew resolvableConfigurations
 
       - name: Print node/npm/yarn versions
         id: versions
